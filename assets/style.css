@@ -18,3 +18,7 @@ h1 {
 form {
     width: 100%;
 }
+
+#search-list {
+    display: none;
+}
