@@ -1,12 +1,20 @@
 body {
-
+    box-sizing: border-box;
 }
 
 header {
-    background-color: rgb(45, 45, 219);
+    background-color: rgb(45, 45, 136);
+    display:block;  
+}
+
+.p-5 {
+    padding: 1.2rem;
 }
 
 h1 {
     color: white;
-    text-align: center;
+    text-align: center; 
+}
+form {
+    width: 100%;
 }
