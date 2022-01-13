@@ -3,6 +3,9 @@ var APIkey = "f908e2482b3256d6ec8a552a28745317";
 
 // on local HTML
 var searchCity = document.querySelector("#search-city");
+var searchInputVal = document.querySelector("#search-input");
+var currentDayCard = document.querySelector("#current-day");
+var fiveDayCards = document.querySelector("#fiveDay");
 
 
 function renderCurrentData (city, weather, timezone) {
