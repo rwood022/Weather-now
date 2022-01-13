@@ -27,10 +27,29 @@
                 <br>
                 <div class="search-list">
                     <button class="btn btn-info btn-block" id="search-list"></button>
+
                 </div>
             </form>
+            <!-- list of past searches -->
             <div class="list" id="history"></div>
          </div>
+            <!-- today card -->
+         <div class="col-lg-8">
+             <card id="today"
+             class="mt-4"
+             role="region"
+             aria-live="polite"
+             ></card>
+             
+            <!-- 5 day forecast cards-->
+             <card 
+             id="fiveDayRow"
+             class="row mt-4"
+             role="region"
+             aria-live="polite"
+             ></card>
+         </div>
+
    
 
          <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.7/locale/af.min.js" integrity="sha512-CEyNJ+nOLjTVikZ2dL3wrOwzFK98EJiO/WKjT6tiUhri03m8q9TTpE/3RJycsQFkECn4vNo8bpcChKPjQwcNEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
