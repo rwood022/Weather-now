@@ -1,7 +1,6 @@
-// var APIkey = f908e2482b3256d6ec8a552a28745317;
-// var city
-// function searchApi()
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+var rootUrl = "https://api.openweathermap.org";
+var APIkey = f908e2482b3256d6ec8a552a28745317;
+
 
 var searchCity = document.querySelector("#search-city");
 
@@ -15,7 +14,7 @@ function handleSearchFormSubmit(event) {
         return;
     }
 
-    var queryString ="./"
+    var queryString ="./search-results.html?q=" + searchInputVal;
 }
 
 searchCity.addEventListener("submit", handleSearchFormSubmit);
