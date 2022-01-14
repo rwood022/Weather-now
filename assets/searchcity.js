@@ -2,14 +2,55 @@ var APIkey = "f908e2482b3256d6ec8a552a28745317";
 var previousViews = [];
 
 // on local HTML
-var searchCity = document.querySelector("#search-city");
-var searchInputVal = document.querySelector("#search-input");
-var currentDayCard = document.querySelector("#current-day");
-var fiveDayCards = document.querySelector("#fiveDay");
+var searchCity = document.querySelector("search-city");
+var searchInputVal = document.querySelector("search-input");
+var currentDayCard = document.querySelector("current-day");
+var fiveDayCards = document.querySelector("#iveDay");
 var previousViewsContainer = document.querySelector("search-list");
 
 dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
+
+
+var app = {
+    init: function() {
+        document.getElementById("#btnSearch");
+        document.addEventListener("click", fetchWeather);
+        document.getElementById("#btnSearch");
+        document.addEventListener("click", fetchCoordinates);
+    },
+
+    function: fetchWeather(location) {
+        var { lat } = location;
+        var { lon } = location;
+        var city = location.name;
+        var units = metric;
+        var lang = en;
+        var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${APIkey}`;
+        console.log(location);
+    
+        fetch(apiUrl)
+            .then(function (response) {
+            return response.json();
+             })
+        
+            .then(function (data) {
+            if (!data[0]) {
+                alert("Location not found")
+            } else {
+                appendToHistory(search);
+                displayWeather(data[0]);
+            } 
+            })
+            .catch(console.err);
+    
+        displayWeather(function (response) {
+            console.log(response);
+            var today = document.querySelector("#current-day");
+    })};
+        
+    
+
 
 // search history
 function previousViews() {
@@ -51,35 +92,6 @@ function renderCurrentData (city, weather, timezone) {  console.log(city, weathe
 
 }
 //lat and long values to fetch the weather
-function fetchWeather(location) {
-    var { lat } = location;
-    var { lon } = location;
-    var city = location.name;
-    var units = metric;
-    var lang = en;
-    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${APIkey}`;
-    console.log(location);
-
-    fetch(apiUrl)
-        .then(function (res) {
-        return res.json();
-         })
-    
-        .then(function (data) {
-        if (!data[0]) {
-            alert("Location not found")
-        } else {
-            appendToHistory(search);
-            displayWeather(data[0]);
-        } 
-        })
-        .catch(console.err);
-
-    displayWeather(function (res) {
-        console.log(res);
-        var today = document.querySelector("#current-day");
-});
-    
 
 
 
@@ -106,20 +118,26 @@ function fetchCoordinates(search) {
 
 
 function handleSearchFormSubmit(event) {
-    
     event.preventDefault();
-    var search = searchInputVal.value.trim();
-    fetchCoordinates(search);
+
+    var searchInputVal = document.querySelector("#search-input").value;
+
+    
     searchInputVal.value = "";
-    console(search.value);
+    console(searchInputVal.value);
 
 
     if (!searchInputVal.value) {
         console.error("You need to type the name of a city!");
         return;
     }
+
+    fetchCoordinates(search);
 }
 
 searchCity.addEventListener("submit", handleSearchFormSubmit);
 
-}
+}};
+
+
+previousViews();
