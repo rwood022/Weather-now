@@ -28,25 +28,38 @@ function fetchWeather(location) {
     var units = metric;
     var lang = en;
     var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${APIkey}`;
+    console.log(location);
 
     fetch(apiUrl)
-    .then(resp => {
-        if(!resp.ok) throw new Error(resp.statusText);
+        .then(function (resp) {
         return resp.json();
-    })
+         })
     
-    .then(data => {
-       AudioParamMap.showWeather(data); 
-    })
-    .catch(console.err);
+        .then(function (data) {
+        if (!data[0]) {
+            alert("Location not found")
+        } else {
+            appendToHistory(search);
+            displayWeather(data[0]);
+        } 
+        })
+        .catch(console.err);
+
+    displayWeather(function (resp) {
+        console.log(resp);
+        var today = document.querySelector("#current-day");
+})
     
-}
+
+
+
 
 function fetchCoordinates(search) {
     var apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${APIkey}`;
+    
 
     fetch(apiUrl)
-    .then(function (res){
+        .then(function (res){
         return res.json();
     })
     .then(function (data){
@@ -77,4 +90,4 @@ function handleSearchFormSubmit(event) {
 
 searchCity.addEventListener("submit", handleSearchFormSubmit);
 
-
+}
