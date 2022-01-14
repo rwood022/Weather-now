@@ -15,10 +15,20 @@ function renderCurrentData (city, weather, timezone) {
 
     var tempFar = weather.temp;
     var windMph = weather.wind_speed;
-    var humidity = weather.humdity;
+    var humidityWea = weather.humdity;
     var uvi = weather.uvi; 
     var icon = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
     var iconDescript =  weather.weather[0].description || weather[0].main;
+
+    var box = document.createElement("div");
+    var boxBody = document.createElement("div");
+    var date = document.createElement("h1");
+    var iconPic = document.createElement("img");
+    var temp = document.createElement("li");
+    var wind = document.createElement("li");
+    var humid = document.createElement("li");
+    var uvIndex = document.createElement("li");
+
 }
 //lat and long values to fecth the weather
 function fetchWeather(location) {
@@ -31,8 +41,8 @@ function fetchWeather(location) {
     console.log(location);
 
     fetch(apiUrl)
-        .then(function (resp) {
-        return resp.json();
+        .then(function (res) {
+        return res.json();
          })
     
         .then(function (data) {
@@ -45,10 +55,10 @@ function fetchWeather(location) {
         })
         .catch(console.err);
 
-    displayWeather(function (resp) {
-        console.log(resp);
+    displayWeather(function (res) {
+        console.log(res);
         var today = document.querySelector("#current-day");
-})
+});
     
 
 
