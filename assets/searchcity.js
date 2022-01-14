@@ -1,4 +1,3 @@
-var rootUrl = "https://api.openweathermap.org";
 var APIkey = "f908e2482b3256d6ec8a552a28745317";
 
 // on local HTML
@@ -7,6 +6,9 @@ var searchInputVal = document.querySelector("#search-input");
 var currentDayCard = document.querySelector("#current-day");
 var fiveDayCards = document.querySelector("#fiveDay");
 
+
+dayjs.extend(window.dayjs_plugin_utc);
+dayjs.extend(window.dayjs_plugin_timezone);
 
 function renderCurrentData (city, weather, timezone) {
   var date = dayjs().tz(timezone).format("M/D/YYYY");
@@ -18,26 +20,59 @@ function renderCurrentData (city, weather, timezone) {
     var icon = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
     var iconDescript =  weather.weather[0].description || weather[0].main;
 }
+//lat and long values to fecth the weather
+function fetchWeather(location) {
+    var { lat } = location;
+    var { lon } = location;
+    var city = location.name;
+    var units = metric;
+    var lang = en;
+    var apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude={part}&appid=${APIkey}`;
 
-function fetch(searchCity) {
-    var apiUrl = `${rootUrl}`
+    fetch(apiUrl)
+    .then(resp => {
+        if(!resp.ok) throw new Error(resp.statusText);
+        return resp.json();
+    })
+    
+    .then(data => {
+       AudioParamMap.showWeather(data); 
+    })
+    .catch(console.err);
+    
 }
 
+function fetchCoordinates(search) {
+    var apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${APIkey}`;
 
+    fetch(apiUrl)
+    .then(function (res){
+        return res.json();
+    })
+    .then(function (data){
+        if (!data[0]) {
+            alert("invalid");
+        } else {
+            fetchWeather(data[0]);
+        }
+    })
+    .catch(function (err) {
+        console.error(err);
+    });
+}
 
 
 function handleSearchFormSubmit(event) {
     event.preventDefault();
     var search = searchInputVal.value.trim();
+    fetchCoordinates(search);
+    searchInputVal.value = "";
 
-    var searchInputVal = document.querySelector("#search-input").value;
 
-    if (!searchInputVal) {
+    if (!searchInputVal.value) {
         console.error("You need to type the name of a city!");
         return;
     }
-
-    var queryString ="./search-results.html?q=" + searchInputVal;
 }
 
 searchCity.addEventListener("submit", handleSearchFormSubmit);
