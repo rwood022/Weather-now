@@ -1,16 +1,34 @@
 var APIkey = "f908e2482b3256d6ec8a552a28745317";
+var previousViews = [];
 
 // on local HTML
 var searchCity = document.querySelector("#search-city");
 var searchInputVal = document.querySelector("#search-input");
 var currentDayCard = document.querySelector("#current-day");
 var fiveDayCards = document.querySelector("#fiveDay");
-
+var previousViewsContainer = document.querySelector("search-list");
 
 dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
 
-function renderCurrentData (city, weather, timezone) {
+// search history
+function previousViews() {
+    previousViewsContainer.innerHTML = "";
+
+    for (var i = previousViews.length - 1; i >= 0; i--) {
+        var button = document.createElement("button");
+        button.setAttribute("type", "button");
+        button.setAttribute( "aria-controls", "current day forecast");
+        button.classList.add("search-list", "search-list");
+        button.setAttribute("get-data", previousViews[i]);
+        button.textContent = previousViews[i];
+        previousViewsContainer.append(button);
+        console.log("get-data");
+    }
+}
+
+function renderCurrentData (city, weather, timezone) {  console.log(city, weather, timezone);
+
   var date = dayjs().tz(timezone).format("M/D/YYYY");
 
     var tempFar = weather.temp;
@@ -29,8 +47,10 @@ function renderCurrentData (city, weather, timezone) {
     var humid = document.createElement("li");
     var uvIndex = document.createElement("li");
 
+
+
 }
-//lat and long values to fecth the weather
+//lat and long values to fetch the weather
 function fetchWeather(location) {
     var { lat } = location;
     var { lon } = location;
@@ -86,10 +106,12 @@ function fetchCoordinates(search) {
 
 
 function handleSearchFormSubmit(event) {
+    
     event.preventDefault();
     var search = searchInputVal.value.trim();
     fetchCoordinates(search);
     searchInputVal.value = "";
+    console(search.value);
 
 
     if (!searchInputVal.value) {
