@@ -18,9 +18,9 @@ var app = {
         document.addEventListener("click", fetchWeather);
         document.getElementById("#btnSearch");
         document.addEventListener("click", fetchCoordinates);
-    },
+    };
 
-    function: fetchWeather(location) {
+    function fetchWeather(location) {
         var { lat } = location;
         var { lon } = location;
         var city = location.name;
@@ -40,14 +40,21 @@ var app = {
             } else {
                 appendToHistory(search);
                 displayWeather(data[0]);
-            } 
-            })
-            .catch(console.err);
+            }
+            .catch(function (err) {
+                console.error(err);
+            });
+       
+            
     
         displayWeather(function (response) {
             console.log(response);
             var today = document.querySelector("#current-day");
-    });
+
+        });        
+    
+    
+        
         
     
 
@@ -88,13 +95,10 @@ var app = {
         var humid = document.createElement("li");
         var uvIndex = document.createElement("li");
 
-
+        
 
     }
 //lat and long values to fetch the weather
-
-
-
 
     function fetchCoordinates(search) {
         var apiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=5&appid=${APIkey}`;
@@ -131,13 +135,21 @@ var app = {
             console.error("You need to type the name of a city!");
             return;
         }
-
         fetchCoordinates(search);
     }
-
-    searchCity.addEventListener("submit", handleSearchFormSubmit);
-
-
+    
 };
 
+function handlepreviousSearch(event) {
+    if(!event.target.matches(".search-list")) {
+        return;
+    }
+
+    var button = event.target;
+    var searchCity = button.getAttribut("get-data");
+    fetchCoordinates(searchCity);
+}
+
 previousViews();
+searchCity.addEventListener("submit", handleSearchFormSubmit);
+
