@@ -14,16 +14,17 @@ dayjs.extend(window.dayjs_plugin_timezone);
 
 var app = {
     init: function() {
-        document.getElementById("#btnSearch");
-        document.addEventListener("click", fetchWeather);
-        document.getElementById("#btnSearch");
+        document.getElementById("#btnSearch").document.addEventListener("click", fetchWeather);
+        document.getElementById("#btnSearch").
         document.addEventListener("click", fetchCoordinates);
+        }
     }
 
+   
     function renderInfo(city, data) {
-        renderCurrentData(city, data.current, data.timezone);
-        render5Day(data.daily, data.timezone);
-    }
+        renderCurrentData(city, data.current, data.timezone)
+        render5Day(data.daily, data.timezone)
+        }
 
     function fetchWeather(location) {
         var { lat } = location;
@@ -40,28 +41,20 @@ var app = {
              })
         
             .then(function (data) {
-                
-                if (!data[0]) {
-                alert("Location not found")
-                } else {
-                appendToHistory(search);
-                displayWeather(data[0]);
-                } .catch((err) => {
+                renderInfo(city, data);
+            })
+            .catch(function (err) {
                 console.error(err);
             })
-        };
-       
-            
+                
+               
     
         displayWeather(function (response) {
             console.log(response);
             var today = document.querySelector("#current-day");
 
         });
-    }
-    
-        
-                    
+    };
     
 
 // search history
@@ -175,7 +168,7 @@ var app = {
         fetchCoordinates(search);
     }
     
-}
+
 
 function handlePreviousSearchClick(event) {
     if(!event.target.matches(".search-list")) {
@@ -187,6 +180,7 @@ function handlePreviousSearchClick(event) {
     fetchCoordinates(searchCity);
 }
 
-previousViews();
+init();
 searchCity.addEventListener("submit", handleSearchFormSubmit);
+app.addEventListener("click", fetchWeather);
 
