@@ -4,8 +4,8 @@ var previousViews = [];
 // on local HTML
 var searchCity = document.querySelector("search-city");
 var searchInputVal = document.querySelector("search-input");
-var currentDayCard = document.querySelector("current-day");
-var fiveDayCards = document.querySelector("#iveDay");
+var currentDayBox = document.querySelector("current-day");
+var fiveDayBoxes = document.querySelector("#iveDay");
 var previousViewsContainer = document.querySelector("search-list");
 
 dayjs.extend(window.dayjs_plugin_utc);
@@ -18,7 +18,12 @@ var app = {
         document.addEventListener("click", fetchWeather);
         document.getElementById("#btnSearch");
         document.addEventListener("click", fetchCoordinates);
-    };
+    }
+
+    function renderInfo(city, data) {
+        renderCurrentData(city, data.current, data.timezone);
+        render5Day(data.daily, data.timezone);
+    }
 
     function fetchWeather(location) {
         var { lat } = location;
@@ -35,15 +40,16 @@ var app = {
              })
         
             .then(function (data) {
-            if (!data[0]) {
+                
+                if (!data[0]) {
                 alert("Location not found")
-            } else {
+                } else {
                 appendToHistory(search);
                 displayWeather(data[0]);
-            }
-            .catch(function (err) {
+                } .catch((err) => {
                 console.error(err);
-            });
+            })
+        };
        
             
     
@@ -51,13 +57,12 @@ var app = {
             console.log(response);
             var today = document.querySelector("#current-day");
 
-        });        
-    
+        });
+    }
     
         
-        
+                    
     
-
 
 // search history
     function previousViews() {
@@ -80,7 +85,7 @@ var app = {
     var date = dayjs().tz(timezone).format("M/D/YYYY");
 
         var tempFar = weather.temp;
-        var windMph = weather.wind_speed;
+        var windSpeed = weather.wind_speed;
         var humidityWea = weather.humdity;
         var uvi = weather.uvi; 
         var icon = `http://openweathermap.org/img/w/${weather.weather[0].icon}.png`;
@@ -95,8 +100,40 @@ var app = {
         var humid = document.createElement("li");
         var uvIndex = document.createElement("li");
 
-        
+        box.setAttribute("class", "box");
+        boxBody.setAttribute("class", "box-body");
+        box.append(boxBody);
 
+        date.setAttribute("class", "h1");
+        temp.setAttribute("class", "box-text");
+        wind.setAttribute("class", "box-text");
+        humidity.setAttribute("class", "box-text");
+
+        date.textContent = `${city} (${date})`;
+        iconPic.setAttribute("src", icon);
+        icon.setAttribute("alt", iconDescript);
+        iconPic.setAttribute("class", "iconPic");
+        date.append(iconPic);
+        temp.textContent =`Temp: ${tempFar}F`;
+        wind.textContent = `Wind: ${windSpeed}MPH`;
+        humidityWea.textContent = `Humiditiy: ${humidity}%`;
+        boxBody.append(date, temp, wind, humidityWea);
+        uvIndex.textContent = "UV Index: ";
+        uviBadge.classList.add("btn");
+
+        if (uvi < 3) {
+            uviBadge.classList.add("btn-success");
+        } else if (uvi < 7) {
+            uviBadge.classList.add("btn-warning");
+        } else {
+            uviBade.classList.add("btn-danger");
+        }
+        uviBadge.textContent = uvi;
+        uviIndex.append(uviBadge);
+        boxBody.append(uvIndex);
+
+        currentDayBox.innerHTML = "";
+        currentDayBox.append(box);
     }
 //lat and long values to fetch the weather
 
@@ -138,9 +175,9 @@ var app = {
         fetchCoordinates(search);
     }
     
-};
+}
 
-function handlepreviousSearch(event) {
+function handlePreviousSearchClick(event) {
     if(!event.target.matches(".search-list")) {
         return;
     }
