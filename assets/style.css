@@ -36,3 +36,7 @@ form {
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+#current-day {
+    display: center;
+}
