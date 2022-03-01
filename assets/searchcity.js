@@ -18,7 +18,7 @@ console.log(renderSearch);
 
     function fetchUVI (uvi) {
         fetch (
-            `https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid=` + APIkey
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=` + APIkey
         )
         .then((response) => response.json())
         .then((data) => {
@@ -31,10 +31,14 @@ console.log(renderSearch);
    function display (data){
         var { name } = data;
         // var { current } = current.uvi;
+        var { icon, description } = data.weather[0];
         var { temp, humidity } = data.main;
         var { speed }= data.wind;
+        console.log(icon, description);
         document.querySelector(".town").innerHTML = "Weather in " + name;
         document.querySelector(".temp").innerHTML = temp + "F";
+        document.querySelector(".icon").src = "https://openweather.org/img/wn" + icon + ".png";
+        document.querySelector(".description").innerHTML = description;
         document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + "%";
         document.querySelector(".windSpeed").innerHTML = "Wind Speed:" + speed + "mph";
         // document.querySelector(".uvIndex").innerHTML = "Current UV Index:" + current;
