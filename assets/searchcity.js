@@ -16,16 +16,27 @@ console.log(renderSearch);
         });
     }
 
-    function fetchUVI (uvi) {
+    function fetchLatLon (lat, lon) {
         fetch (
-            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=` + APIkey
+            `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit={limit}&appid=` + APIkey
         )
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            console.log(lat, lon);
             display(data);
-        })
+        });
     }
+
+    // function fetchUVI (uvi) {
+    //     fetch (
+    //         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=` + APIkey
+    //     )
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data);
+    //         display(data);
+    //     })
+    // }
 
 
    function display (data){

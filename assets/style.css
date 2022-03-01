@@ -2,6 +2,15 @@ body {
     box-sizing: border-box;
 }
 
+.weather {
+    padding-left: 100px;
+}
+
+.five-day {
+    padding-left: 30px;
+    display: flex;
+}
+
 header {
     background-color: rgb(45, 45, 136);
     display:block;  
@@ -37,6 +46,3 @@ form {
     flex-wrap: wrap;
 }
 
-.weather {
-    display: center;
-}
