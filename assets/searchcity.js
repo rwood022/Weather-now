@@ -7,7 +7,7 @@ console.log(renderSearch);
 
     function fetchWeather (city) {
         fetch (
-         `https://api.openweathermap.org/data/2.5/weather?q=` + city + `&units=metric&appid=` + APIkey
+         `https://api.openweathermap.org/data/2.5/weather?q=` + city + `&units=imperial&appid=` + APIkey
         )
         .then((response) => response.json())
         .then((data) => {
@@ -16,27 +16,27 @@ console.log(renderSearch);
         });
     }
 
-    function fetchLatLon (lat, lon) {
-        fetch (
-            `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit={limit}&appid=` + APIkey
-        )
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(lat, lon);
-            display(data);
-        });
-    }
-
-    // function fetchUVI (uvi) {
+    // function fetchLatLon (lat, lon) {
     //     fetch (
-    //         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=` + APIkey
+    //         `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit={limit}&appid=` + APIkey
     //     )
     //     .then((response) => response.json())
     //     .then((data) => {
-    //         console.log(data);
+    //         console.log(lat, lon);
     //         display(data);
-    //     })
+    //     });
     // }
+
+    function fetchUVI (uvi) {
+        fetch (
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely&appid=` + APIkey
+        )
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            display(data);
+        })
+    }
 
 
    function display (data){
@@ -45,10 +45,11 @@ console.log(renderSearch);
         var { icon, description } = data.weather[0];
         var { temp, humidity } = data.main;
         var { speed }= data.wind;
-        console.log(icon, description);
+        var { lat, lon } = data.coord;
+        console.log(icon, description, lat, lon);
         document.querySelector(".town").innerHTML = "Weather in " + name;
         document.querySelector(".temp").innerHTML = temp + "F";
-        document.querySelector(".icon").src = "https://openweather.org/img/wn" + icon + ".png";
+        document.querySelector(".icon").src = `https://openweather.org/img/w/${data.weather[0].icon}png`;
         document.querySelector(".description").innerHTML = description;
         document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + "%";
         document.querySelector(".windSpeed").innerHTML = "Wind Speed:" + speed + "mph";
