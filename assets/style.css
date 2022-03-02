@@ -2,13 +2,25 @@ body {
     box-sizing: border-box;
 }
 
-.weather {
-    padding-left: 100px;
+#current-day {
+    margin: 10px;
+    padding: 10px;
+    border-style: solid;
+    display: center;
 }
 
-.five-day {
-    padding-left: 30px;
+/* .five-day {
+    padding: 30px;
+    border-style: solid;
     display: flex;
+} */
+
+#day1, #day2, #day3, #day4, #day5 {
+    border-style: solid;
+    text-align: justify;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
 }
 
 header {
@@ -16,17 +28,15 @@ header {
     display:block;  
 }
 
-.p-5 {
-    padding: 1.2rem;
-}
+
 
 h1 {
     color: white;
     text-align: center; 
 }
-form {
+/* form {
     width: 100%;
-}
+} */
 
 #search-list {
     display: none;
@@ -40,9 +50,9 @@ form {
     justify-content: center;
 }
 
-.flex-column {
+/* .flex-column {
     display:flex;
     flex-direction: column;
     flex-wrap: wrap;
-}
+} */
 
