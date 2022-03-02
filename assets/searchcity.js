@@ -30,14 +30,10 @@ console.log(renderSearch);
         console.log(fiveDayArray);
         for (var i = 0; i < 5; i++) {
             console.log(fiveDayArray[i]);
-            // var cardContainer = document.createElement("div");
-            // cardContainer.classList.add("five");
-
-            // document.querySelector(".five-day").appendchild(cardContainer);
-            // cardContainer.innerHTML = 
-
+    
+            // 5- day forecast
             document.querySelector("#day1").innerHTML =
-            `<div id="day1">Day 1</div>
+            `<div id="date1">${moment().add(1, 'days').format("MM/DD/YYYY")}</div>
             <div class="temp">${fiveDayArray[i].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[i].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[i].humidity} %</div>
@@ -45,34 +41,35 @@ console.log(renderSearch);
 
 
             document.querySelector("#day2").innerHTML =
-            `<div id="day2">Day 2</div>
+            `<div id="day2">${moment().add(2, 'days').format("MM/DD/YYYY")}</div>
             <div class="temp">${fiveDayArray[1].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[1].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[1].humidity} %</div>
             <div class="windSpeed">${fiveDayArray[1].wind_speed} mph</div>`
 
             document.querySelector("#day3").innerHTML =
-            `<div id="day3">Day 3</div>
+            `<div id="day3">${moment().add(3, 'days').format("MM/DD/YYYY")}</div>
             <div class="temp">${fiveDayArray[2].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[2].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[2].humidity} %</div>
             <div class="windSpeed">${fiveDayArray[2].wind_speed} mph</div>`
 
             document.querySelector("#day4").innerHTML =
-            `<div id="day4">Day 4</div>
+            `<div id="day4">${moment().add(4, 'days').format("MM/DD/YYYY")}</div>
             <div class="temp">${fiveDayArray[3].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[3].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[3].humidity} %</div>
             <div class="windSpeed">${fiveDayArray[3].wind_speed} mph</div>`
 
             document.querySelector("#day5").innerHTML =
-            `<div id="day5">Day 5</div>
+            `<div id="day5">${moment().add(5, 'days').format("MM/DD/YYYY")}</div>
             <div class="temp">${fiveDayArray[4].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[4].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[4].humidity} %</div>
             <div class="windSpeed">${fiveDayArray[4].wind_speed} mph</div>`
         }
     }
+
 
     function fetchUVI (lat, lon) {
         fetch (
@@ -108,7 +105,7 @@ console.log(renderSearch);
 function searchCity() {
     console.log("click");
         fetchWeather(document.querySelector("#search-input").value);
-        // fetchUVI(document.querySelector("#search-input").value);
+        
     }
 
 
