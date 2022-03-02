@@ -1,5 +1,6 @@
 var search = document.querySelector("search-input");
 var renderSearch = document.getElementById("btnSearch");
+var today = moment().format("MM/DD/YYYY");
 console.log("hello");
 console.log(renderSearch);
 
@@ -17,19 +18,27 @@ console.log(renderSearch);
         });
     }
 
-    function fetchFive (fiveDayArray) {
+    function fetchFive (fiveDayArray, city) {
+        fetch (
+            `"https://api.openweathermap.org/data/2.5/forecast?q="`+ city + `&units=imperial&appid=`+ APIkey
+        )
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("fetchFive", data);
+            // display(data);
+        });
         console.log(fiveDayArray);
         for (var i = 0; i < 5; i++) {
             console.log(fiveDayArray[i]);
             var cardContainer = document.createElement("div");
             cardContainer.classList.add("five");
+            document.querySelector(".five-day").appendchild(cardContainer);
             cardContainer.innerHTML = 
-            ` <div id="day1">Day 1 </div>
+            `<div id="day1">Day 1 </div>
             <div class="temp">${fiveDayArray[i].temp.day} </div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[i].weather[0].icon}.png" alt="" class="icon" />
             <div class="humidity">${fiveDayArray[i].humidity} </div>
             <div class="windSpeed">${fiveDayArray[i].wind_speed}</div>`
-            document.querySelector(".five-day").appendchild(cardContainer)
         }
     }
 
@@ -42,7 +51,7 @@ console.log(renderSearch);
             console.log("fetch uvi", data);
             // display(data);
             var currentUVI = data.current.uvi;
-            document.querySelector(".uvIndex").innerHTML = " UV index:" + currentUVI;
+            document.querySelector(".uvIndex").innerHTML = "UV index: " + currentUVI;
             fetchFive(data.daily);
         })
     }
@@ -50,20 +59,19 @@ console.log(renderSearch);
 
    function display (data){
         var { name } = data;
-        
         var { icon, description } = data.weather[0];
         console.log(data.weather[0]);
         var { temp, humidity } = data.main;
         var { speed }= data.wind;
         var { lat, lon } = data.coord;
         console.log(icon, description, lat, lon);
-        document.querySelector(".town").innerHTML = "Weather in " + name;
+        document.querySelector(".town").innerHTML = "Weather in " + name +  " ("+ today +") " ; 
         document.querySelector(".temp").innerHTML = temp + "F";
         document.querySelector(".icon").src = `http://openweathermap.org/img/w/` + data.weather[0].icon + `.png`;
         document.querySelector(".description").innerHTML = data.weather[0].description;
         document.querySelector(".humidity").innerHTML = "Humidity: " + humidity + "%";
         document.querySelector(".windSpeed").innerHTML = "Wind Speed:" + speed + "mph";
-        // document.querySelector(".uvIndex").innerHTML = "Current UV Index:" + current;
+      
     }
 function searchCity() {
     console.log("click");
