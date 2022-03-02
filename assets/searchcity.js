@@ -30,15 +30,18 @@ console.log(renderSearch);
         console.log(fiveDayArray);
         for (var i = 0; i < 5; i++) {
             console.log(fiveDayArray[i]);
-            var cardContainer = document.createElement("div");
-            cardContainer.classList.add("five");
-            document.querySelector(".five-day").appendchild(cardContainer);
-            cardContainer.innerHTML = 
-            `<div id="day1">Day 1 </div>
-            <div class="temp">${fiveDayArray[i].temp.day} </div>
+            // var cardContainer = document.createElement("div");
+            // cardContainer.classList.add("five");
+
+            // document.querySelector(".five-day").appendchild(cardContainer);
+            // cardContainer.innerHTML = 
+
+            document.querySelector("#day1").innerHTML =
+            `<div id="day1">Day </div>
+            <div class="temp">${fiveDayArray[i].temp.day} F</div>
             <img src="http://openweathermap.org/img/w/${fiveDayArray[i].weather[0].icon}.png" alt="" class="icon" />
-            <div class="humidity">${fiveDayArray[i].humidity} </div>
-            <div class="windSpeed">${fiveDayArray[i].wind_speed}</div>`
+            <div class="humidity">${fiveDayArray[i].humidity} %</div>
+            <div class="windSpeed">${fiveDayArray[i].wind_speed} mph</div>`
         }
     }
 
